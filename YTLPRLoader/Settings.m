@@ -180,7 +180,7 @@ static NSArray *YTLPRLoaderItems(id manager, id controller) {
     });
     if (loader) [items addObject:loader];
 
-    id mod = YTLPRPlainItem(YTLPRTitle(), @"By AppropriateNet2928",
+    id mod = YTLPRPlainItem(@"YTLitePlusRenewed", @"By AppropriateNet2928",
                             ^BOOL(__unused id cell, __unused NSUInteger index) {
         YTLPROpen(kModRepo);
         return YES;

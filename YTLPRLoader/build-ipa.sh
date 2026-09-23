@@ -56,12 +56,23 @@ for load in ${OLD[@]+"${OLD[@]}"}; do
   echo "removed old injected $(basename "$load")"
 done
 rm -f "$APP/Frameworks/TweakLoader.dylib"
-python3 "$HERE/Tools/macho_inject.py" "$MAIN" ${ARGS[@]+"${ARGS[@]}"} --add-load '@rpath/YTLPRLoader.dylib'
+if [[ ${#ARGS[@]} -gt 0 ]]; then
+  python3 "$HERE/Tools/macho_inject.py" "$MAIN" "${ARGS[@]}"
+fi
+if [[ -f "$HERE/Frameworks/TweakLoader.dylib" ]]; then
+  python3 "$HERE/Tools/macho_inject.py" "$MAIN" --add-load '@rpath/TweakLoader.dylib'
+fi
+python3 "$HERE/Tools/macho_inject.py" "$MAIN" --add-load '@rpath/YTLPRLoader.dylib'
 
 mkdir -p "$APP/Frameworks"
 cp "$LOADER" "$APP/Frameworks/YTLPRLoader.dylib"
 if [[ -d "$HERE/Frameworks" ]]; then
   cp -R "$HERE/Frameworks/." "$APP/Frameworks/"
+fi
+if [[ -n "${TEST_DYLIB:-}" ]]; then
+  [[ -f "$TEST_DYLIB" ]] || { echo "TEST_DYLIB not found: $TEST_DYLIB" >&2; exit 1; }
+  cp "$TEST_DYLIB" "$APP/Frameworks/${TEST_DYLIB_NAME:-$(basename "$TEST_DYLIB")}"
+  echo "using test build for ${TEST_DYLIB_NAME:-$(basename "$TEST_DYLIB")}"
 fi
 [[ -e "$APP/Frameworks/CydiaSubstrate.framework" ]] || echo "warning: no CydiaSubstrate.framework, tweaks won't load"
 if [[ -d "$HERE/Resources" ]]; then
@@ -73,7 +84,7 @@ if [[ -d "$HERE/Resources" ]]; then
 fi
 rm -rf "$APP/YTLPR.bundle"
 cp -R "$BUNDLE" "$APP/YTLPR.bundle"
-for dylib in "$APP/YTLPR.bundle/"*.dylib; do
+for dylib in "$APP/YTLPR.bundle/"*.dylib "$APP/Frameworks/"*.dylib; do
   for old in /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate /usr/lib/libsubstrate.dylib; do
     if otool -L "$dylib" | grep -q "^[[:space:]]*$old "; then
       install_name_tool -change "$old" @rpath/CydiaSubstrate.framework/CydiaSubstrate "$dylib" 2>/dev/null

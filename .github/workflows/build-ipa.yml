@@ -7,6 +7,15 @@ on:
         description: Direct download link to a decrypted YouTube IPA
         required: true
         type: string
+      test_dylib_url:
+        description: Optional. Direct link to a test build of a tweak, it replaces the one in Frameworks
+        required: false
+        type: string
+      test_dylib_name:
+        description: File name the test build replaces
+        required: false
+        default: YTLitePlusRenewed.dylib
+        type: string
 
 permissions:
   contents: read
@@ -17,7 +26,7 @@ jobs:
     env:
       THEOS: ${{ github.workspace }}/theos
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Cache Theos
         id: cache-theos
@@ -60,6 +69,16 @@ jobs:
             exit 1
           fi
 
+      - name: Download test build
+        if: inputs.test_dylib_url != ''
+        env:
+          TEST_URL: ${{ inputs.test_dylib_url }}
+        run: |
+          curl --fail --location "$TEST_URL" --output test.dylib
+          file test.dylib | grep -q "Mach-O" || { echo "That link didn't download a dylib." >&2; exit 1; }
+          echo "TEST_DYLIB=$PWD/test.dylib" >> "$GITHUB_ENV"
+          echo "TEST_DYLIB_NAME=${{ inputs.test_dylib_name }}" >> "$GITHUB_ENV"
+
       - name: Build IPA
         id: ipa
         run: |
@@ -74,7 +93,7 @@ jobs:
           bash YTLPRLoader/build-ipa.sh YouTube.ipa "$output"
           echo "ipa=$output" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: YTLitePlusRenewed-IPA
           path: ${{ steps.ipa.outputs.ipa }}
