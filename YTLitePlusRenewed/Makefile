@@ -1,6 +1,6 @@
 TARGET := iphone:clang:16.5:14.0
 THEOS ?= ../../theos
-ARCHS = arm64e
+ARCHS = arm64 arm64e
 DEBUG = 0
 FINALPACKAGE = 1
 

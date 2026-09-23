@@ -1,0 +1,36 @@
+"RESTART_BAR" = "變更這些設定後需要重新啟動應用程式才能生效。";
+"ENABLED" = "啟用 tweak";
+"ENABLED_DESC" = "開啟此選項將會啟用 tweak。";
+
+"ALLOWS_BACKGROUND_PLAYBACK" = "允許背景播放";
+"ALLOWS_BACKGROUND_PLAYBACK_DESC" = "允許 YouTube 在背景播放影片。";
+
+"VIDEO_ADS" = "移除影片廣告";
+"VIDEO_ADS_DESC" = "移除影片廣告，包括 Shorts。";
+
+"ENABLES_PIP" = "啟用 PiP";
+"ENABLES_PIP_DESC" = "啟用子母畫面 (PiP) 以在 YouTube 應用程式外播放影片。";
+
+"DISABLES_SHORTS_PIP" = "停用 Shorts PiP";
+"DISABLES_SHORTS_PIP_DESC" = "嘗試停用 Shorts PiP，但可能無法完全停用。";
+
+"BLOCK_UPGRADE_DIALOGS" = "阻止升級對話框";
+"BLOCK_UPGRADE_DIALOGS_DESC" = "阻止 YouTube 要求升級應用程式的對話框。";
+
+"ARE_YOU_THERE_DIALOG" = "隱藏「你還在看嗎？」對話框";
+"ARE_YOU_THERE_DIALOG_DESC" = "隱藏在長時間未操作時出現的對話框。";
+
+"HIDE_ADS_BADGES" = "隱藏廣告標記";
+"HIDE_ADS_BADGES_DESC" = "隱藏廣告標記、YouTube Premium 推廣，並嘗試隱藏 AI 相關內容等。";
+
+"HIDE_YOUTUBE_EDU" = "隱藏 YouTube 教學提示（實驗性）";
+"HIDE_YOUTUBE_EDU_DESC" = "嘗試在重新安裝應用程式或首次使用功能時隱藏 YouTube 教學提示。";
+
+"FIXES_SLOW_MINIPLAYER" = "修復迷你播放器緩慢";
+"FIXES_SLOW_MINIPLAYER_DESC" = "修復迷你播放器展開緩慢的問題，僅適用於較舊版本的 YouTube。";
+
+"DISABLES_NEW_MINIPLAYER" = "停用新版迷你播放器";
+"DISABLES_NEW_MINIPLAYER_DESC" = "使用舊版迷你播放器取代新版，僅適用於較舊版本的 YouTube。";
+
+"SNACK_BAR" = "停用提示列";
+"SNACK_BAR_DESC" = "在應用程式中按下按鈕或執行操作時停用提示列。";

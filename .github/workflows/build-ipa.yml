@@ -1,0 +1,81 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      ipa_url:
+        description: Direct download link to a decrypted YouTube IPA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      THEOS: ${{ github.workspace }}/theos
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Theos
+        id: cache-theos
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/theos
+          key: theos-${{ runner.os }}-v1
+
+      - name: Install Theos
+        if: steps.cache-theos.outputs.cache-hit != 'true'
+        run: |
+          git clone --quiet --recursive --depth 1 https://github.com/theos/theos.git "$THEOS"
+          git clone --quiet --depth 1 --filter=blob:none --sparse https://github.com/theos/sdks.git sdks-tmp
+          git -C sdks-tmp sparse-checkout set iPhoneOS16.5.sdk
+          mkdir -p "$THEOS/sdks"
+          mv sdks-tmp/iPhoneOS16.5.sdk "$THEOS/sdks/"
+          rm -rf sdks-tmp
+
+      - name: Install tools
+        run: brew install ldid
+
+      - name: Build loader
+        working-directory: YTLPRLoader
+        run: make FINALPACKAGE=1
+
+      - name: Download YouTube
+        env:
+          IPA_URL: ${{ inputs.ipa_url }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "$IPA_URL" == "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/assets/"* ]]; then
+            curl --fail --location --header "Accept: application/octet-stream" \
+              --header "Authorization: Bearer $GH_TOKEN" "$IPA_URL" --output YouTube.ipa
+          else
+            curl --fail --location "$IPA_URL" --output YouTube.ipa
+          fi
+          type="$(file --mime-type -b YouTube.ipa)"
+          if [[ "$type" != "application/x-ios-app" && "$type" != "application/zip" ]]; then
+            echo "That link didn't download an IPA (got $type). Use a direct download link." >&2
+            exit 1
+          fi
+
+      - name: Build IPA
+        id: ipa
+        run: |
+          version="$(python3 - <<'PY'
+          import plistlib, zipfile
+          with zipfile.ZipFile('YouTube.ipa') as archive:
+              info = next(n for n in archive.namelist() if n.startswith('Payload/') and n.endswith('.app/Info.plist'))
+              print(plistlib.loads(archive.read(info))['CFBundleShortVersionString'])
+          PY
+          )"
+          output="YTLitePlusRenewed_YouTube_${version}.ipa"
+          bash YTLPRLoader/build-ipa.sh YouTube.ipa "$output"
+          echo "ipa=$output" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YTLitePlusRenewed-IPA
+          path: ${{ steps.ipa.outputs.ipa }}
+          if-no-files-found: error

@@ -1,0 +1,55 @@
+{
+  "title": "YTLitePlusRenewed",
+  "sections": [
+    {
+      "title": "Main",
+      "tweaks": [
+        { "name": "YTLite", "file": "YTLite.dylib", "about": "YouTube Plus by dayanch96, 100+ options", "on": true },
+        { "name": "YTLitePlusRenewed", "file": "YTLitePlusRenewed.dylib", "about": "Local queue, Flappy Bird and custom themes", "on": true },
+        { "name": "YTKACE", "file": "YTKACE.dylib", "about": "Downloads, SponsorBlock and 100+ options by itzzace" },
+        { "name": "YouMod", "file": "YouMod.dylib", "about": "Download manager and SponsorBlock by TonWalter888" },
+        { "name": "YTDownloadManager", "file": "YTDownloadManager.dylib", "about": "Download videos, Shorts and audio", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouFixPlaybackIssues", "file": "YouFixPlaybackIssues.dylib", "about": "Fixes videos that stop or fail to play", "on": true },
+        { "name": "YouHideUserInterface", "file": "YouHideUserInterface.dylib", "about": "Eye button to hide the player UI", "on": true }
+      ]
+    },
+    {
+      "title": "Player Buttons",
+      "tweaks": [
+        { "name": "YTVideoOverlay", "file": "YTVideoOverlay.dylib", "about": "Needed by the player buttons below", "on": true },
+        { "name": "YouSpeed", "file": "YouSpeed.dylib", "about": "Speed button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouQuality", "file": "YouQuality.dylib", "about": "Quality button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouLoop", "file": "YouLoop.dylib", "about": "Loop button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouMute", "file": "YouMute.dylib", "about": "Mute button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouShare", "file": "YouShare.dylib", "about": "Copy link button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouGetCaption", "file": "YouGetCaption.dylib", "about": "Copy captions button", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YouPiP", "file": "YouPiP.dylib", "about": "Picture in Picture", "on": true, "needs": ["YTVideoOverlay.dylib"] },
+        { "name": "YTUHD", "file": "YTUHD.dylib", "about": "2K and 4K on older iPhones", "on": true, "needs": ["YTVideoOverlay.dylib"] }
+      ]
+    },
+    {
+      "title": "Extras",
+      "tweaks": [
+        { "name": "Return YouTube Dislike", "file": "YouTubeDislikesReturn.dylib", "about": "Shows dislike counts", "on": true },
+        { "name": "DontEatMyContent", "file": "DontEatMyContent.dylib", "about": "Keeps the notch out of videos", "on": true },
+        { "name": "YouChooseQuality", "file": "YouChooseQuality.dylib", "about": "Picks your preferred quality automatically", "on": true },
+        { "name": "NoYTPremium", "file": "NoYTPremium.dylib", "about": "Hides Premium promos", "on": true },
+        { "name": "Gonerino", "file": "Gonerino.dylib", "about": "Hide videos from chosen channels", "on": true },
+        { "name": "YTweaks", "file": "YTweaks.dylib", "about": "Extra options by fosterbarnes", "on": true },
+        { "name": "PleaseDontStopTheMusic", "file": "PleaseDontStopTheMusic.dylib", "about": "Stops other apps pausing your music", "on": true },
+        { "name": "YouGroupSettings", "file": "YouGroupSettings.dylib", "about": "Groups tweak settings under Tweaks", "on": true }
+      ]
+    },
+    {
+      "title": "Developer",
+      "tweaks": [
+        { "name": "A/B", "file": "YTABConfig.dylib", "about": "Experimental YouTube flags" },
+        { "name": "YTFlags", "file": "YTFlags.dylib", "about": "More flag hooks" },
+        { "name": "YTVideoErrorAlert", "file": "YTVideoErrorAlert.dylib", "about": "Shows playback error details" },
+        { "name": "YTIcons", "file": "YTIcons.dylib", "about": "Lists every YouTube icon" },
+        { "name": "FLEX", "file": "FLEXing.dylib", "about": "In-app inspector" },
+        { "name": "FLEX Helper", "file": "FLEXHelperForYT.dylib", "about": "Open FLEX from YouTube settings", "needs": ["FLEXing.dylib"] }
+      ]
+    }
+  ]
+}
